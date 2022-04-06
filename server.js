@@ -10,7 +10,7 @@ process.on('uncaughtException', err => {
 dotenv.config({ path: './config.env' });
 const app = require('./app');
 
-const DB = process.env.DATABASE;
+const DB = "mongodb+srv://BlogUser:Sifat15963740@cluster0.0igq6.mongodb.net/test?authSource=admin&replicaSet=atlas-p80ak0-shard-0&w=majority&readPreference=primary&appname=MongoDB%20Compass&retryWrites=true&ssl=true";
 
 mongoose
   .connect(DB, {
