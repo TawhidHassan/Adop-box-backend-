@@ -1,5 +1,5 @@
 const express = require('express');
-const PatBlogPostController = require('../../controllers/PatBlogPostController/PatBlogPostController');
+const PatBlogPostController = require('../../controllers/patBlogPostController/patBlogPostController');
 const authController = require('../../controllers/authController');
 const router = express.Router();
 
