@@ -8,7 +8,10 @@ const categorySchema = new mongoose.Schema({
     type: String,
     required: [true, 'Enter category name!']
   },
-  photo: String,
+  photo: {
+    type:String,
+    default:"N/A"
+  },
   active: {
     type: Boolean,
     default: true,
