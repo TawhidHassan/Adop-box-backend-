@@ -1,13 +1,33 @@
 const catchAsync = require('../../utils/catchAsync')
 const CategoryModel = require('../../models/CategoryModel/categoryModel')
-
+const cloudinary = require('cloudinary').v2;
+const fileUpload = require('express-fileupload');
+//cloudnary
+cloudinary.config({ 
+    cloud_name: 'sifat-it', 
+    api_key: '152464894557898', 
+    api_secret: 'f4bN19XFCndeyzFqvUsR-DlBSzY' 
+  });
 exports.createCategory = catchAsync(async (req, res, next) => {
-    const category = await CategoryModel.create(req.body);
-    res.status(200).json({
-        status: 'success',
-        category
-    })
+    // var category;
+    const file=req.files.photo;
+    console.log(file)
+    cloudinary.uploader.upload(file.tempFilePath,(err,result)=>{
+        // console.log("Error"+err)
+        console.log(result.url)
+        const category =  CategoryModel.create({
+            name:req.body.name,
+            photo:result.url
+        });
+        res.status(200).json({
+            status: 'success',
+            category
+        })
+        
+    });
+   
 })
+
 
 exports.getallCategory = catchAsync(async (req, res, next) => {
     const category = await CategoryModel.find()

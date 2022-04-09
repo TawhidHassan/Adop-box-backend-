@@ -8,8 +8,8 @@ const hpp = require('hpp');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
-
-
+const cloudinary = require('cloudinary').v2;
+const fileUpload = require('express-fileupload');
 
 const userRouter = require('./routes/userRoutes');
 const categoryRouter = require('./routes/CategoryRoute/categoryRoute')
@@ -22,11 +22,20 @@ const app = express();
 // 1) GLOBAL MIDDLEWARES
 // Set security HTTP headers
 app.use(helmet());
-
+app.use(fileUpload({
+  useTempFiles:true
+})); 
 // Development logging
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
+
+//cloudnary
+cloudinary.config({ 
+  cloud_name: 'sifat-it', 
+  api_key: '152464894557898', 
+  api_secret: 'f4bN19XFCndeyzFqvUsR-DlBSzY' 
+});
 
 // Limit requests from same API
 const limiter = rateLimit({
@@ -69,6 +78,8 @@ app.use((req, res, next) => {
   next();
 });
 
+
+ 
 // 3) ROUTES and endpoint
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/category', categoryRouter)
